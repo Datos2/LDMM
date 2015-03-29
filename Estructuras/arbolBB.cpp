@@ -43,10 +43,10 @@ void arbolBB::Insertar(const int dat)
    if(Vacio(padre)) raiz = new nodoArbol(dat);
    // Si el int es menor que el que contiene el nodo padre, lo insertamos
    // en la rama izquierda
-   else if(dat < padre->GetDato()) padre->GetIzquierdo() = new nodoArbol(dat);
+   else if(dat < padre->GetDato()) padre->SetIzquierdo() = new nodoArbol(dat);
    // Si el int es mayor que el que contiene el nodo padre, lo insertamos
    // en la rama derecha
-   else if(dat > padre->GetDato()) padre->GetDerecho() = new nodoArbol(dat);
+   else if(dat > padre->GetDato()) padre->SetDerecho() = new nodoArbol(dat);
 }
 
 // Eliminar un elemento de un árbol ABB
@@ -74,10 +74,10 @@ void arbolBB::Borrar(const int dat)
             padre = actual;
             // Buscar nodo más izquierdo de rama derecha
             if(actual->GetDerecho()) {
-               nodo = actual->SetDerecho();
+               nodo = actual->GetDerecho();
                while(nodo->GetIzquierdo()) {
                   padre = nodo;
-                  nodo = nodo->SetIzquierdo();
+                  nodo = nodo->GetIzquierdo();
                }
             }
             // O buscar nodo más derecho de rama izquierda
@@ -93,8 +93,8 @@ void arbolBB::Borrar(const int dat)
             // por qué ser un nodo hoja, cerrando el bucle nos aseguramos
             // de que sólo se eliminan nodos hoja.
             aux = actual->GetDato();
-            actual->GetDato() = nodo->SetDato();
-            nodo->GetDato() = aux;
+            actual->SetDato() = nodo->GetDato();
+            nodo->SetDato() = aux;
             actual = nodo;
          }
       }
@@ -112,9 +112,9 @@ void arbolBB::Borrar(const int dat)
 void arbolBB::InOrden(void (*func)(int&) , nodoArbol *nodo, bool r)
 {
    if(r) nodo = raiz;
-   if(nodo->GetIzquierdo()) InOrden(func, nodo->SetIzquierdo(), false);
+   if(nodo->GetIzquierdo()) InOrden(func, nodo->GetIzquierdo(), false);
    func(nodo->GetDato());
-   if(nodo->GetDerecho()) InOrden(func, nodo->SetDerecho(), false);
+   if(nodo->GetDerecho()) InOrden(func, nodo->GetDerecho(), false);
 }
 
 // Recorrido de árbol en preorden, aplicamos la función func, que tiene
@@ -124,8 +124,8 @@ void arbolBB::PreOrden(void (*func)(int&), nodoArbol *nodo, bool r)
 {
    if(r) nodo = raiz;
    func(nodo->GetDato());
-   if(nodo->GetIzquierdo()) PreOrden(func, nodo->SetIzquierdo(), false);
-   if(nodo->GetDerecho()) PreOrden(func, nodo->SetDerecho(), false);
+   if(nodo->GetIzquierdo()) PreOrden(func, nodo->GetIzquierdo(), false);
+   if(nodo->GetDerecho()) PreOrden(func, nodo->GetDerecho(), false);
 }
 
 // Recorrido de árbol en postorden, aplicamos la función func, que tiene
@@ -134,8 +134,8 @@ void arbolBB::PreOrden(void (*func)(int&), nodoArbol *nodo, bool r)
 void arbolBB::PostOrden(void (*func)(int&), nodoArbol *nodo, bool r)
 {
    if(r) nodo = raiz;
-   if(nodo->GetIzquierdo()) PostOrden(func, nodo->SetIzquierdo(), false);
-   if(nodo->GetDerecho()) PostOrden(func, nodo->SetDerecho(), false);
+   if(nodo->GetIzquierdo()) PostOrden(func, nodo->GetIzquierdo(), false);
+   if(nodo->GetDerecho()) PostOrden(func, nodo->GetDerecho(), false);
    func(nodo->GetDato());
 }
 
